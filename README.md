@@ -1,5 +1,7 @@
 # Twitter Elasticsearch Logger
 
+[![CircleCI](https://circleci.com/gh/hjmsano/twitter-elasticsearch-logger/tree/master.svg?style=svg)](https://circleci.com/gh/hjmsano/twitter-elasticsearch-logger/tree/master)
+
 ## What is this?
 - There are many solutions to storing tweets to databases but I could not find a good (easy, flexible and simple) tool for Elasticsearch.
 - This script is a worker written in Node.js to the following process:
