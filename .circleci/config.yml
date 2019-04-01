@@ -1,0 +1,61 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:10.15
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  test:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:10.15
+      - image: docker.elastic.co/elasticsearch/elasticsearch:6.6.2
+        environment:
+          node.master: true
+          node.data: true
+          node.ingest: true
+          ES_JAVA_OPTS: '-Xms512M -Xmx512M'
+          network.host: '0.0.0.0'
+          thread_pool.bulk.queue_size: 1000
+          discovery.type: single-node
+          xpack.security.enabled: false
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Wait for Elasticsearch
+          command: 'dockerize -wait http://localhost:9200/ -timeout 2m -wait-retry-interval 10s'
+      - run:
+          name: Create "coverage" directory
+          command: 'mkdir coverage'
+      - run: npm test --runInBand
+      - store_artifacts:
+          path: coverage
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build:
+          filters:
+            branches:
+                only: master
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master

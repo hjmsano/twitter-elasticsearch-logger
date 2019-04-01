@@ -1,0 +1,107 @@
+{
+  "order": 0,
+  "index_patterns": [
+    "twitter-*"
+  ],
+  "settings": {
+    "index": {
+      "codec": "best_compression",
+      "mapping": {
+        "nested_fields": {
+          "limit": "200"
+        },
+        "total_fields": {
+          "limit": "5000"
+        },
+        "depth": {
+          "limit": "5"
+        }
+      },
+      "max_docvalue_fields_search": "256",
+      "analysis": {
+        "analyzer": {
+          "kuro": {
+            "filter": [
+              "kuromoji_baseform",
+              "kuromoji_part_of_speech",
+              "ja_stop",
+              "kuromoji_number",
+              "kuromoji_stemmer"
+            ],
+            "char_filter": [
+              "icu_normalizer",
+              "kuromoji_iteration_mark"
+            ],
+            "type": "custom",
+            "tokenizer": "kuromoji_tokenizer"
+          }
+        }
+      },
+      "number_of_replicas": "0"
+    }
+  },
+  "mappings": {
+    "tweet": {
+      "_source": {
+        "enabled": true
+      },
+      "properties": {
+        "created_at ": {
+          "type": "date"
+        },
+        "text": {
+          "type": "text",
+          "analyzer": "kuro",
+          "fielddata": true
+        },
+        "user": {
+          "properties": {
+            "description": {
+              "type": "text",
+              "analyzer": "kuro",
+              "fielddata": true
+            }
+          }
+        },
+        "geo": {
+          "properties": {
+            "coordinates": {
+              "ignore_malformed": true,
+              "type": "geo_point"
+            }
+          }
+        },
+        "coordinates": {
+          "properties": {
+            "coordinates": {
+              "ignore_malformed": true,
+              "type": "geo_point"
+            }
+          }
+        }
+      },
+      "dynamic_templates": [
+        {
+          "objects": {
+            "mapping": {
+              "type": "object"
+            },
+            "match_mapping_type": "object",
+            "match": "*"
+          }
+        },
+        {
+          "all_text_not_analyzed": {
+            "mapping": {
+              "type": "keyword",
+              "ignore_above": 2048
+            },
+            "match_mapping_type": "string",
+            "match": "*"
+          }
+        }
+      ]
+    }
+  },
+  "aliases": {}
+}

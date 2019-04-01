@@ -1,0 +1,31 @@
+{
+  "name": "twitter-archiver",
+  "version": "0.1.0",
+  "description": "Storing tweets retrieved from Twitter Search API to Elasticsearch.",
+  "main": "worker.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hjmsano/twitter-archiver.git"
+  },
+  "author": "Hajime Sano",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hjmsano/twitter-archiver/issues"
+  },
+  "homepage": "https://github.com/hjmsano/twitter-archiver#readme",
+  "dependencies": {
+    "dotenv": "^7.0.0",
+    "elasticsearch": "^15.4.1",
+    "node-cron": "^2.0.3",
+    "twitter": "^1.7.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-plugin-jest": "^22.4.1",
+    "jest-runner-eslint": "^0.7.3",
+    "jest": "^24.5.0"
+  }
+}
