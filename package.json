@@ -2,7 +2,7 @@
   "name": "twitter-archiver",
   "version": "0.1.0",
   "description": "Storing tweets retrieved from Twitter Search API to Elasticsearch.",
-  "main": "worker.js",
+  "main": "main.js",
   "scripts": {
     "test": "jest"
   },
