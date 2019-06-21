@@ -18,14 +18,14 @@
   "homepage": "https://github.com/hjmsano/twitter-archiver#readme",
   "dependencies": {
     "dotenv": "^7.0.0",
-    "elasticsearch": "^15.4.1",
+    "elasticsearch": "^15.5.0",
     "node-cron": "^2.0.3",
     "twitter": "^1.7.1"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
-    "eslint-plugin-jest": "^22.4.1",
-    "jest-runner-eslint": "^0.7.3",
-    "jest": "^24.5.0"
+    "eslint-plugin-jest": "^22.7.0",
+    "jest": "^24.8.0",
+    "jest-runner-eslint": "^0.7.4"
   }
 }
